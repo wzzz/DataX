@@ -129,6 +129,14 @@ TxtFileWriter实现了从DataX协议转为本地TXT文件功能，本地文件�
 
 	* 默认值：, <br />
 
+* **recordDelimiter**
+
+	* 描述：读取的记录分隔符 (fileFormat为text时有效)<br />
+
+	* 必选：否 <br />
+
+	* 默认值：\n <br />
+
 * **compress**
 
 	* 描述：文本压缩类型，默认不填写意味着没有压缩。支持压缩类型为zip、lzo、lzop、tgz、bzip2。 <br />

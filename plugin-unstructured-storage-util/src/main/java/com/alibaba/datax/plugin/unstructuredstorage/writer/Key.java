@@ -10,6 +10,9 @@ public class Key {
     // not must , not default ,
     public static final String FIELD_DELIMITER = "fieldDelimiter";
 
+    // not must , not default ,
+    public static final String RECORD_DELIMITER = "recordDelimiter";
+
     // not must, default UTF-8
     public static final String ENCODING = "encoding";
 

@@ -21,6 +21,15 @@ public class TextCsvWriterManager {
             return new CsvWriterImpl(writer, fieldDelimiter);
         }
     }
+    public static UnstructuredWriter produceUnstructuredWriter(
+            String fileFormat, char fieldDelimiter, char recordDelimiter, Writer writer) {
+        // warn: false means plain text(old way), true means strict csv format
+        if (Constant.FILE_FORMAT_TEXT.equals(fileFormat)) {
+            return new TextWriterImpl(writer, fieldDelimiter, recordDelimiter);
+        } else {
+            return new CsvWriterImpl(writer, fieldDelimiter);
+        }
+    }
 }
 
 class CsvWriterImpl implements UnstructuredWriter {
@@ -65,10 +74,17 @@ class TextWriterImpl implements UnstructuredWriter {
             .getLogger(TextWriterImpl.class);
     // text StringUtils的join方式, 简单的字符串拼接
     private char fieldDelimiter;
+    private char recordDelimiter = Constant.DEFAULT_RECORD_DELIMITER;
     private Writer textWriter;
 
     public TextWriterImpl(Writer writer, char fieldDelimiter) {
         this.fieldDelimiter = fieldDelimiter;
+        this.textWriter = writer;
+    }
+
+    public TextWriterImpl(Writer writer, char fieldDelimiter, char recordDelimiter) {
+        this.fieldDelimiter = fieldDelimiter;
+        this.recordDelimiter = recordDelimiter;
         this.textWriter = writer;
     }
 
@@ -79,7 +95,7 @@ class TextWriterImpl implements UnstructuredWriter {
         }
         this.textWriter.write(String.format("%s%s",
                 StringUtils.join(splitedRows, this.fieldDelimiter),
-                IOUtils.LINE_SEPARATOR));
+                this.recordDelimiter));
     }
 
     @Override
